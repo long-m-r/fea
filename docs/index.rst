@@ -37,7 +37,7 @@ For a basic example, we'll start by defining a 3D pyramid as the original model 
 .. code-block:: python
 
     from optlang import *
-    from fea import flux_envelope_analysis as fea
+    from fea import flux_envelope_analysis
 
     # Start by defining our original pyramid
     model = Model(name='Pyramid')
@@ -50,7 +50,7 @@ For a basic example, we'll start by defining a 3D pyramid as the original model 
     model.add(Constraint(z+y,ub=1,name='back_wall'))
 
     # Let's solve for what it looks like in 2D from the front
-    front_view = fea(model,[x,y])
+    front_view = flux_envelope_analysis(model,[x,y])
 
 Easy enough, now let's plot the solution space and generate the Lattice Graph as an image:
 

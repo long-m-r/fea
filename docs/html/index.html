@@ -56,9 +56,9 @@
 <h1>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h1>
 <p>For a basic example, we’ll start by defining a 3D pyramid as the original model as shown in the image above. The pyramid will have 4 sides and a bottom (or 5 facets/constraints). We’ll generate it the original model first and then solve it for just the x and y axes (removing z from consideration)</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">optlang</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">fea</span> <span class="kn">import</span> <span class="n">flux_envelope_analysis</span> <span class="k">as</span> <span class="n">fea</span>
+<span class="kn">from</span> <span class="nn">fea</span> <span class="kn">import</span> <span class="n">flux_envelope_analysis</span>
 
-<span class="c1">#### Start by defining our original pyramid ####</span>
+<span class="c1"># Start by defining our original pyramid</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;Pyramid&#39;</span><span class="p">)</span>
 <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span> <span class="o">=</span> <span class="p">(</span><span class="n">Variable</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">),</span><span class="n">Variable</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">),</span><span class="n">Variable</span><span class="p">(</span><span class="s1">&#39;z&#39;</span><span class="p">))</span>
 <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">([</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">])</span>
@@ -68,8 +68,8 @@
 <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Constraint</span><span class="p">(</span><span class="o">-</span><span class="n">z</span><span class="o">+</span><span class="n">y</span><span class="p">,</span><span class="n">ub</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;front_wall&#39;</span><span class="p">))</span>
 <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Constraint</span><span class="p">(</span><span class="n">z</span><span class="o">+</span><span class="n">y</span><span class="p">,</span><span class="n">ub</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;back_wall&#39;</span><span class="p">))</span>
 
-<span class="c1">#### Let&#39;s solve for what it looks like in 2D from the front ####</span>
-<span class="n">front_view</span> <span class="o">=</span> <span class="n">fea</span><span class="p">(</span><span class="n">model</span><span class="p">,[</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">])</span>
+<span class="c1"># Let&#39;s solve for what it looks like in 2D from the front</span>
+<span class="n">front_view</span> <span class="o">=</span> <span class="n">flux_envelope_analysis</span><span class="p">(</span><span class="n">model</span><span class="p">,[</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">])</span>
 </pre></div>
 </div>
 <p>Easy enough, now let’s plot the solution space and generate the Lattice Graph as an image:</p>
@@ -99,7 +99,7 @@
 <span class="target" id="module-fea"></span><dl class="py function">
 <dt id="fea.flux_envelope_analysis">
 <code class="sig-prename descclassname">fea.</code><code class="sig-name descname">flux_envelope_analysis</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em>, <em class="sig-param"><span class="n">variables</span></em>, <em class="sig-param"><span class="n">max_value</span><span class="o">=</span><span class="default_value">1000</span></em>, <em class="sig-param"><span class="n">max_iter</span><span class="o">=</span><span class="default_value">1000</span></em>, <em class="sig-param"><span class="n">eps</span><span class="o">=</span><span class="default_value">0.0001</span></em><span class="sig-paren">)</span><a class="headerlink" href="#fea.flux_envelope_analysis" title="Permalink to this definition">¶</a></dt>
-<dd><p>Run Flux Envelope Analysis <a class="footnote-reference brackets" href="#id2" id="id1">1</a> on a model for the given variables</p>
+<dd><p>Run Flux Envelope Analysis on a model for the given variables</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -121,12 +121,6 @@
 <p>This routine will attempt to find a complete solution, but does not guarantee that
 the solution returned will be complete. Always check the ‘complete’ attribute of the
 solution before utilizing.</p>
-<p class="rubric">References</p>
-<dl class="footnote brackets">
-<dt class="label" id="id2"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
-<dd><p>Long, M. R. and Reed, J.L., “FEA”…</p>
-</dd>
-</dl>
 </dd></dl>
 
 <ul class="simple">

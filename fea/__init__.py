@@ -13,7 +13,7 @@ This module contains the flux_envelople_analysis caller function, which will gen
 """
 
 def flux_envelope_analysis(model,variables,max_value=1000,max_iter=1000,eps=10**-4):
-    """Run Flux Envelope Analysis [1]_ on a model for the given variables
+    """Run Flux Envelope Analysis on a model for the given variables
 
     Parameters
     ----------
