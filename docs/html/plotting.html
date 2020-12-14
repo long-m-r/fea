@@ -1,0 +1,190 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Plotting Functions &#8212; FEA 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Internal Classes" href="internal%20classes.html" />
+    <link rel="prev" title="Flux Envelope Analysis" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-fea.plot.plotting">
+<span id="plotting-functions"></span><h1>Plotting Functions<a class="headerlink" href="#module-fea.plot.plotting" title="Permalink to this headline">¶</a></h1>
+<dl class="py function">
+<dt id="fea.plot.plotting.plot">
+<code class="sig-prename descclassname">fea.plot.plotting.</code><code class="sig-name descname">plot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#fea.plot.plotting.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots a 2d or 3d graph given an FEA LatticeGraph object (the output of the fea function)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>graph</strong> – FEA Lattice Graph to Plot</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Named Arguments:</dt><dd><p>figure: The figure to plot on
+cmap: color map (defaults to inferno)
+x: specify variable name for X-axis
+y: specify variable name for Y-axis
+z: specify variable name for Z-axis
+c: specify variable name for color-axis
+vertices: Default True. Whether or not to plot vertices
+edges: Default True. Whether or not to plot edges</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Tuple of matplotlib figure and plot</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>solution = fea(model, [x,y,z])
+solfigure, solplot = plot(solution, x=’x’, y=’y’, z=’z’)
+solfigure.savefix(‘solution_figure.svg’)</p>
+</dd></dl>
+
+<span class="target" id="module-fea.plot.old_plot"></span><dl class="py function">
+<dt id="fea.plot.old_plot.label_facets">
+<code class="sig-prename descclassname">fea.plot.old_plot.</code><code class="sig-name descname">label_facets</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">fea</span></em>, <em class="sig-param"><span class="n">plot</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">figure</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#fea.plot.old_plot.label_facets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Label the facets of an FEA Lattice Graph.</p>
+<p>Really only useful when combined with plot_edges</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fea</strong> – Lattice Graph/FEA solution to plot</p></li>
+<li><p><strong>plot</strong> – [Optional] Matplotlib plot</p></li>
+<li><p><strong>figure</strong> – [Optional] Matplotlib figure</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>tuple of Matplotlib figure and plot with the facets labeled</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="fea.plot.old_plot.plot_edges">
+<code class="sig-prename descclassname">fea.plot.old_plot.</code><code class="sig-name descname">plot_edges</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">fea</span></em>, <em class="sig-param"><span class="n">plot</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">figure</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#fea.plot.old_plot.plot_edges" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the edges of an FEA Lattice Graph</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fea</strong> – Lattice Graph/FEA solution to plot</p></li>
+<li><p><strong>plot</strong> – [Optional] Matplotlib plot</p></li>
+<li><p><strong>figure</strong> – [Optional] Matplotlib figure</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>tuple of Matplotlib figure and plot</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="fea.plot.old_plot.plot_vertices">
+<code class="sig-prename descclassname">fea.plot.old_plot.</code><code class="sig-name descname">plot_vertices</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">fea</span></em>, <em class="sig-param"><span class="n">plot</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">figure</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">label</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#fea.plot.old_plot.plot_vertices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the vertices of an FEA Lattice Graph</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fea</strong> – Lattice Graph/FEA solution to plot</p></li>
+<li><p><strong>plot</strong> – [Optional] Matplotlib plot</p></li>
+<li><p><strong>figure</strong> – [Optional] Matplotlib figure</p></li>
+<li><p><strong>label</strong> – [Default=False] Whether to label the vertices with their ID</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>tuple of Matplotlib figure and plot</p>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-fea.plot.graphviz"></span><dl class="py function">
+<dt id="fea.plot.graphviz.generate_graphviz">
+<code class="sig-prename descclassname">fea.plot.graphviz.</code><code class="sig-name descname">generate_graphviz</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">fea</span></em>, <em class="sig-param"><span class="n">only_real</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#fea.plot.graphviz.generate_graphviz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a GraphViz-style string of the LatticeGraph.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fea</strong> – the FEA solution/Lattice Graph to plot</p></li>
+<li><p><strong>only_real</strong> – Whether or not to include psuedo-nodes created during execution</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>String representing a GraphViz representation of the Lattice Graph</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Flux Envelope Analysis</a></li>
+      <li>Next: <a href="internal%20classes.html" title="next chapter">Internal Classes</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Matthew R. Long and Jennifer L. Reed.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/plotting.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

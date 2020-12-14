@@ -1,0 +1,4 @@
+Flux Envelope Analysis
+======================
+.. automodule:: fea
+   :members:

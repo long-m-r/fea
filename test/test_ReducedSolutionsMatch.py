@@ -9,7 +9,7 @@ from itertools import permutations
 class ReducedSolutionsMatch(unittest.TestCase):
     def setUp(self):
         # Parameters for our full/original model
-        self.original_dims=6
+        self.original_dims=4
         self.original_cons=2*self.original_dims
         self.var_limit=10
         self.nsteps=10
@@ -92,7 +92,7 @@ class ReducedSolutionsMatch(unittest.TestCase):
             ptr=np.array([self.reduced_optlang.primal_values[v.name] for v in self.subset])
 
             # We should get the same point
-            self.assertTrue(np.linalg.norm(ptm-ptr) <= self.reduced.EPS**2)
+            self.assertTrue(np.linalg.norm(ptm-ptr) <= self.reduced.EPS)
             # We should get the same value
             self.assertTrue(np.abs(mv-rv) <= self.reduced.EPS)
 

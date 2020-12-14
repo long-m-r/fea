@@ -39,9 +39,6 @@ def flux_envelope_analysis(model,variables,max_value=1000,max_iter=1000,eps=10**
     the solution returned will be complete. Always check the 'complete' attribute of the
     solution before utilizing.
 
-    References
-    ----------
-    .. [1] Long, M. R. and Reed, J.L., "FEA"...
     """
     obj=LatticeGraph(model,variables,max_value=max_value,eps=eps)
     res=obj.solve(max_iter)

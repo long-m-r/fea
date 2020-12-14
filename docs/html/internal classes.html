@@ -1,0 +1,738 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Internal Classes &#8212; FEA 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Plotting Functions" href="plotting.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="internal-classes">
+<h1>Internal Classes<a class="headerlink" href="#internal-classes" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="fea.LatticeGraph">
+<em class="property">class </em><code class="sig-prename descclassname">fea.</code><code class="sig-name descname">LatticeGraph</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">problem</span></em>, <em class="sig-param"><span class="n">variables</span></em>, <em class="sig-param"><span class="n">max_value</span><span class="o">=</span><span class="default_value">1000</span></em>, <em class="sig-param"><span class="n">eps</span><span class="o">=</span><span class="default_value">1e-06</span></em><span class="sig-paren">)</span><a class="headerlink" href="#fea.LatticeGraph" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="fea.LatticeGraph.DEC">
+<em class="property">property </em><code class="sig-name descname">DEC</code><a class="headerlink" href="#fea.LatticeGraph.DEC" title="Permalink to this definition">¶</a></dt>
+<dd><p>The order-of-magnitude of EPS</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.LatticeGraph.EDGE_LEVEL">
+<em class="property">property </em><code class="sig-name descname">EDGE_LEVEL</code><a class="headerlink" href="#fea.LatticeGraph.EDGE_LEVEL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Level of the Edge Nodes (<em>i.e.</em> 1)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.LatticeGraph.EPS">
+<em class="property">property </em><code class="sig-name descname">EPS</code><a class="headerlink" href="#fea.LatticeGraph.EPS" title="Permalink to this definition">¶</a></dt>
+<dd><p>The detection limit of the method</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.LatticeGraph.FACET_LEVEL">
+<em class="property">property </em><code class="sig-name descname">FACET_LEVEL</code><a class="headerlink" href="#fea.LatticeGraph.FACET_LEVEL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Level of the Facet Nodes</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.LatticeGraph.M">
+<em class="property">property </em><code class="sig-name descname">M</code><a class="headerlink" href="#fea.LatticeGraph.M" title="Permalink to this definition">¶</a></dt>
+<dd><p>Original problem dimensions</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.LatticeGraph.N">
+<em class="property">property </em><code class="sig-name descname">N</code><a class="headerlink" href="#fea.LatticeGraph.N" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reduced problem/graph dimensions</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.LatticeGraph.POLYTOPE_LEVEL">
+<em class="property">property </em><code class="sig-name descname">POLYTOPE_LEVEL</code><a class="headerlink" href="#fea.LatticeGraph.POLYTOPE_LEVEL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Level of the Polytope Node</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.LatticeGraph.VERTEX_LEVEL">
+<em class="property">property </em><code class="sig-name descname">VERTEX_LEVEL</code><a class="headerlink" href="#fea.LatticeGraph.VERTEX_LEVEL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Level of the Vertex Nodes (<em>i.e.</em> 0)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.LatticeGraph.add_edge">
+<code class="sig-name descname">add_edge</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">nodefrom</span></em>, <em class="sig-param"><span class="n">nodeto</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#fea.LatticeGraph.add_edge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect a parent node (higher level) to a child node (lower level).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nodefrom</strong> (<a class="reference internal" href="#fea.Node" title="fea.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">fea.Node</span></code></a>) – Nodes to connect in lattice graph</p></li>
+<li><p><strong>nodeto</strong> (<a class="reference internal" href="#fea.Node" title="fea.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">fea.Node</span></code></a>) – Nodes to connect in lattice graph</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.LatticeGraph.add_node">
+<code class="sig-name descname">add_node</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">node</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#fea.LatticeGraph.add_node" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a node to the graph</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>node</strong> (<a class="reference internal" href="#fea.Node" title="fea.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">fea.Node</span></code></a>) – The node to add. It must be a Node object.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Other named arguments may be passed as attributes of the node in the graph (see <code class="xref py py-func docutils literal notranslate"><span class="pre">networkx.DiGraph.add_node()</span></code>)</p>
+<p>All added nodes will be automatically connected to appropriate parent and child nodes. The f-vector will be updated accordingly</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.LatticeGraph.complete">
+<em class="property">property </em><code class="sig-name descname">complete</code><a class="headerlink" href="#fea.LatticeGraph.complete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Boolean value indicating whether the Lattice Graph appears complete or whether missing nodes remain to be found</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.LatticeGraph.f_vector">
+<em class="property">property </em><code class="sig-name descname">f_vector</code><a class="headerlink" href="#fea.LatticeGraph.f_vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>The f-vector for the graph</p>
+<p class="rubric">Notes</p>
+<p>This vector is continously updated and maintained and is NOT re-calculated on enumeration</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.LatticeGraph.get_facets">
+<code class="sig-name descname">get_facets</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">node</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">real</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">complete</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">pandas</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">rhs_label</span><span class="o">=</span><span class="default_value">'RHS'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#fea.LatticeGraph.get_facets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all vertices</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node</strong> (<a class="reference internal" href="#fea.Node" title="fea.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">fea.Node</span></code></a>) – A node which the nodes of the desired level must connect to</p></li>
+<li><p><strong>real</strong> (<em>Boolean</em>) – Whether to only include real nodes</p></li>
+<li><p><strong>complete</strong> (<em>Boolean</em>) – Whether to only return nodes which are part of a complete subgraph</p></li>
+<li><p><strong>pandas</strong> (<em>Boolean</em>) – Whether to return a pandas DataFrame or whether to return an array of fea.Node objects</p></li>
+<li><p><strong>rhs_label</strong> (<em>String</em>) – The label for the Right-hand side. Default ‘RHS’</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>A list of all facets</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.LatticeGraph.get_node">
+<code class="sig-name descname">get_node</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">node</span></em><span class="sig-paren">)</span><a class="headerlink" href="#fea.LatticeGraph.get_node" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a specific node in the graph</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>node</strong> (int or <a class="reference internal" href="#fea.Node" title="fea.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">fea.Node</span></code></a>) – Either the node id or a node object to return</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>The specified node object or None if it does not exist</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.LatticeGraph.get_nodes_of_level">
+<code class="sig-name descname">get_nodes_of_level</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">level</span></em>, <em class="sig-param"><span class="n">connected</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">real</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">complete</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#fea.LatticeGraph.get_nodes_of_level" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all nodes of a given level</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>level</strong> (<em>int</em>) – Level of nodes to find</p></li>
+<li><p><strong>connected</strong> (<a class="reference internal" href="#fea.Node" title="fea.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">fea.Node</span></code></a>) – A node which the nodes of the desired level must connect to</p></li>
+<li><p><strong>real</strong> (<em>Boolean</em>) – Whether to only include real nodes</p></li>
+<li><p><strong>complete</strong> (<em>Boolean</em>) – Whether to only return nodes which are part of a complete subgraph</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>A list of nodes of the desired level</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.LatticeGraph.get_vertices">
+<code class="sig-name descname">get_vertices</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">node</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">real</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">complete</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">pandas</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#fea.LatticeGraph.get_vertices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all vertices</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node</strong> (<a class="reference internal" href="#fea.Node" title="fea.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">fea.Node</span></code></a>) – A node which the nodes of the desired level must connect to</p></li>
+<li><p><strong>real</strong> (<em>Boolean</em>) – Whether to only include real nodes</p></li>
+<li><p><strong>complete</strong> (<em>Boolean</em>) – Whether to only return nodes which are part of a complete subgraph</p></li>
+<li><p><strong>pandas</strong> (<em>Boolean</em>) – Whether to return a pandas DataFrame or whether to return an array of fea.Node objects</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>A list of all vertices</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.LatticeGraph.modified_euler_characteristic">
+<em class="property">property </em><code class="sig-name descname">modified_euler_characteristic</code><a class="headerlink" href="#fea.LatticeGraph.modified_euler_characteristic" title="Permalink to this definition">¶</a></dt>
+<dd><p>The modified Euler characteristic</p>
+<p class="rubric">Notes</p>
+<p>A completed and enclosed polytope will always have a modified Euler characteristic of zero. The result is equivalent to:</p>
+<div class="math notranslate nohighlight">
+\[(-1)^{N} * \sum^{N}_{i=-1} (-1)^{i} f_{i}\]</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.LatticeGraph.predecessors">
+<code class="sig-name descname">predecessors</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">node</span></em>, <em class="sig-param"><span class="n">real</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">complete</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#fea.LatticeGraph.predecessors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get higher nodes given an input node</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node</strong> (<a class="reference internal" href="#fea.Node" title="fea.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">fea.Node</span></code></a>) – Node to find predecessors of</p></li>
+<li><p><strong>real</strong> (<em>Boolean</em>) – Whether to only include real nodes</p></li>
+<li><p><strong>complete</strong> (<em>Boolean</em>) – Whether to only return nodes which are part of a complete subgraph</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>A list of predecessor nodes</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.LatticeGraph.remove_node">
+<code class="sig-name descname">remove_node</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">node</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#fea.LatticeGraph.remove_node" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove a node from the graph</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>node</strong> (<a class="reference internal" href="#fea.Node" title="fea.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">fea.Node</span></code></a>) – The node to remove. It must look like a Node object.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>All added nodes will be automatically disconnected and orphaned child nodes will be removed automatically. The f-vector will be updated accordingly</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.LatticeGraph.reset">
+<code class="sig-name descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fea.LatticeGraph.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Completely clear the graph to its initial state</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.LatticeGraph.search">
+<code class="sig-name descname">search</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">node</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#fea.LatticeGraph.search" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform a single search to find another node in the LatticeGraph</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>node</strong> (<a class="reference internal" href="#fea.Node" title="fea.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">fea.Node</span></code></a>) – A node to search from</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>True if a new node was found, False if not</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.LatticeGraph.solve">
+<code class="sig-name descname">solve</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">max_iter</span><span class="o">=</span><span class="default_value">50</span></em>, <em class="sig-param"><span class="n">exhaust</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#fea.LatticeGraph.solve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Solve the LatticeGraph to find the complete solution</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>max_iter</strong> (<em>int</em>) – Max number of iterations before stopping</p></li>
+<li><p><strong>exhaust</strong> (<em>bool</em>) – Whether to exhaust all edge searches or whether to stop when hueristics indicate we’re done</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>The number of iterations it took to solve</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.LatticeGraph.successors">
+<code class="sig-name descname">successors</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">node</span></em>, <em class="sig-param"><span class="n">real</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">complete</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#fea.LatticeGraph.successors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get lower nodes given an input node</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node</strong> (<a class="reference internal" href="#fea.Node" title="fea.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">fea.Node</span></code></a>) – Node to find successors of</p></li>
+<li><p><strong>real</strong> (<em>Boolean</em>) – Whether to only include real nodes</p></li>
+<li><p><strong>complete</strong> (<em>Boolean</em>) – Whether to only return nodes which are part of a complete subgraph</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>A list of successor nodes</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.LatticeGraph.to_optlang_model">
+<code class="sig-name descname">to_optlang_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">replace_variables</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#fea.LatticeGraph.to_optlang_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert this reduced LatticeGraph to a native optlang model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>replace_variables</strong> (<em>bool</em>) – Whether to generate new variables so that solutions to the new model do not change this solution. Default True</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">optlang.Model</span></code> object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.LatticeGraph.to_scipy_optimize_model">
+<code class="sig-name descname">to_scipy_optimize_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fea.LatticeGraph.to_scipy_optimize_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert this reduced LatticeGraph to a native SciPy optimize model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>A dictionary so that <cite>**kwargs</cite> works with scipy.optimize</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="fea.Node">
+<em class="property">class </em><code class="sig-prename descclassname">fea.</code><code class="sig-name descname">Node</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#fea.Node" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="fea.Node.complete">
+<em class="property">property </em><code class="sig-name descname">complete</code><a class="headerlink" href="#fea.Node.complete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Boolean indicating whether the node is completed</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.Node.eps">
+<em class="property">property </em><code class="sig-name descname">eps</code><a class="headerlink" href="#fea.Node.eps" title="Permalink to this definition">¶</a></dt>
+<dd><p>The detection limit of the method</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.Node.facet_has_vertex">
+<code class="sig-name descname">facet_has_vertex</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">other</span></em><span class="sig-paren">)</span><a class="headerlink" href="#fea.Node.facet_has_vertex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Indicates whether this node contain a vertex</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#fea.Node" title="fea.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">fea.Node</span></code></a>) – The node representing a vertex to check</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>True if the vertex is contained in this Node</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.Node.id">
+<em class="property">property </em><code class="sig-name descname">id</code><a class="headerlink" href="#fea.Node.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nodes unique ID number. Lazily assigned</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.Node.level">
+<em class="property">property </em><code class="sig-name descname">level</code><a class="headerlink" href="#fea.Node.level" title="Permalink to this definition">¶</a></dt>
+<dd><p>The level of this node as an int</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.Node.n">
+<em class="property">property </em><code class="sig-name descname">n</code><a class="headerlink" href="#fea.Node.n" title="Permalink to this definition">¶</a></dt>
+<dd><p>The max norm of of the halfspace, indicates level</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.Node.orthogonal_vector">
+<code class="sig-name descname">orthogonal_vector</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">children</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#fea.Node.orthogonal_vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate an orthoganol vector to the current node</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>children</strong> (iterable of <a class="reference internal" href="#fea.Halfspace" title="fea.Halfspace"><code class="xref py py-class docutils literal notranslate"><span class="pre">fea.Halfspace</span></code></a> objects) – If specified, children is an iterable containing facets that we should NOT search towards</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.Node.point">
+<em class="property">property </em><code class="sig-name descname">point</code><a class="headerlink" href="#fea.Node.point" title="Permalink to this definition">¶</a></dt>
+<dd><p>An array of points corresponding to this node as a <code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.Node.random_vector">
+<code class="sig-name descname">random_vector</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fea.Node.random_vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a random search vector</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.Node.real">
+<em class="property">property </em><code class="sig-name descname">real</code><a class="headerlink" href="#fea.Node.real" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether this node is real or not</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.Node.real_count">
+<em class="property">property </em><code class="sig-name descname">real_count</code><a class="headerlink" href="#fea.Node.real_count" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of real halfspaces in this node</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.Node.required_halfspaces">
+<em class="property">property </em><code class="sig-name descname">required_halfspaces</code><a class="headerlink" href="#fea.Node.required_halfspaces" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of halfspaces needed to be complete</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.Node.score">
+<em class="property">property </em><code class="sig-name descname">score</code><a class="headerlink" href="#fea.Node.score" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adjusted level to show whether the node is complete. Used for sorting</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.Node.sort_key">
+<em class="property">property </em><code class="sig-name descname">sort_key</code><a class="headerlink" href="#fea.Node.sort_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>A tuple indicating how promising this node is for further searches</p>
+<p>We want to search the highest level and lowest scoring nodes in general.
+Lower levels are more specific and provide less overall information.
+Higher scores indicate that the node is further away from being complete
+so the next solution likely will not return an obvious facet.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.Node.valid_domain">
+<em class="property">property </em><code class="sig-name descname">valid_domain</code><a class="headerlink" href="#fea.Node.valid_domain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the domain is valid or not</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.Node.vertex_has_facet">
+<code class="sig-name descname">vertex_has_facet</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">other</span></em><span class="sig-paren">)</span><a class="headerlink" href="#fea.Node.vertex_has_facet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Indicates whether this vertex is contained in another facet</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#fea.Node" title="fea.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">fea.Node</span></code></a>) – The node representing a facet to check</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>True if the facet is contained by this vertex</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="fea.Halfspace">
+<em class="property">class </em><code class="sig-prename descclassname">fea.</code><code class="sig-name descname">Halfspace</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">variables</span></em>, <em class="sig-param"><span class="n">norm</span></em>, <em class="sig-param"><span class="n">point</span></em>, <em class="sig-param"><span class="n">real</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">eps</span><span class="o">=</span><span class="default_value">1e-06</span></em>, <em class="sig-param"><span class="n">interface</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">required</span><span class="o">=</span><span class="default_value">{}</span></em><span class="sig-paren">)</span><a class="headerlink" href="#fea.Halfspace" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="fea.Halfspace.contains">
+<code class="sig-name descname">contains</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">other</span></em>, <em class="sig-param"><span class="n">eps</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#fea.Halfspace.contains" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check whether this halfspace contains a point</p>
+<p>Respects the detection margin, eps</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>other</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>) – A point to check whether it is contained</p></li>
+<li><p><strong>eps</strong> (<em>float</em>) – The detection limit. Defaults to class value, but can be overriden</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.Halfspace.dec">
+<em class="property">property </em><code class="sig-name descname">dec</code><a class="headerlink" href="#fea.Halfspace.dec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the detection/error limit power</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.Halfspace.distance">
+<code class="sig-name descname">distance</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">point</span></em><span class="sig-paren">)</span><a class="headerlink" href="#fea.Halfspace.distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the distance between this halfspace and a point</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>point</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>) – A point to check the distance against</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.Halfspace.eps">
+<em class="property">property </em><code class="sig-name descname">eps</code><a class="headerlink" href="#fea.Halfspace.eps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the detection/error limit</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.Halfspace.key">
+<em class="property">property </em><code class="sig-name descname">key</code><a class="headerlink" href="#fea.Halfspace.key" title="Permalink to this definition">¶</a></dt>
+<dd><p>A string representation of this hashtable. Guaranteed to match for identical halfspaces (within our detection limit, eps)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.Halfspace.name">
+<em class="property">property </em><code class="sig-name descname">name</code><a class="headerlink" href="#fea.Halfspace.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use this as a distinct name</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.Halfspace.norm">
+<em class="property">property </em><code class="sig-name descname">norm</code><a class="headerlink" href="#fea.Halfspace.norm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the normal unit vector</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.Halfspace.point">
+<em class="property">property </em><code class="sig-name descname">point</code><a class="headerlink" href="#fea.Halfspace.point" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the defining point of the halfspace</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.Halfspace.rhs">
+<em class="property">property </em><code class="sig-name descname">rhs</code><a class="headerlink" href="#fea.Halfspace.rhs" title="Permalink to this definition">¶</a></dt>
+<dd><p>RHS of the halfspace</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="fea.Search">
+<em class="property">class </em><code class="sig-prename descclassname">fea.</code><code class="sig-name descname">Search</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em>, <em class="sig-param"><span class="n">vars</span></em>, <em class="sig-param"><span class="n">eps</span><span class="o">=</span><span class="default_value">1e-06</span></em>, <em class="sig-param"><span class="n">clone</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#fea.Search" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="fea.Search.Hd">
+<code class="sig-name descname">Hd</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">i</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#fea.Search.Hd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Halfspace duals</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>i</strong> (<em>int</em>) – Optional index of which halfspace to get the dual from. Defaults to all</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Halfspace dual values</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.Search.Heps">
+<code class="sig-name descname">Heps</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">i</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#fea.Search.Heps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Halfspace epsilon values</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>i</strong> (<em>int</em>) – Optional index of which halfspace to get the epsilon from. Defaults to all</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Halfspace epsilon values</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.Search.activate">
+<code class="sig-name descname">activate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fea.Search.activate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add the current constraint</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.Search.bounding_halfspace">
+<code class="sig-name descname">bounding_halfspace</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fea.Search.bounding_halfspace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds a bounding halfspace for this search</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#fea.Halfspace" title="fea.Halfspace"><code class="xref py py-class docutils literal notranslate"><span class="pre">fea.Halfspace</span></code></a> representing a new bound for the search</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.Search.deactivate">
+<code class="sig-name descname">deactivate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fea.Search.deactivate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove the current constraint</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.Search.get_solution">
+<code class="sig-name descname">get_solution</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">_i</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#fea.Search.get_solution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Attempt to solve the currently set problem</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Boolean indicating whether it was able to find an optimal solution</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.Search.perturb_cons">
+<code class="sig-name descname">perturb_cons</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">index</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#fea.Search.perturb_cons" title="Permalink to this definition">¶</a></dt>
+<dd><p>Randomly perturb one halfspace constraint to find a new solution</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.Search.psuedo_halfspace">
+<code class="sig-name descname">psuedo_halfspace</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fea.Search.psuedo_halfspace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a psuedo-halfspace when a true one cannot be obtained</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#fea.Halfspace" title="fea.Halfspace"><code class="xref py py-class docutils literal notranslate"><span class="pre">fea.Halfspace</span></code></a> object representing a new psuedo-halfspace</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.Search.set">
+<code class="sig-name descname">set</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">obj</span></em>, <em class="sig-param"><span class="n">hps</span></em><span class="sig-paren">)</span><a class="headerlink" href="#fea.Search.set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the current constraint</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>) – The objective function vector</p></li>
+<li><p><strong>hps</strong> (iterable of <a class="reference internal" href="#fea.Halfspace" title="fea.Halfspace"><code class="xref py py-class docutils literal notranslate"><span class="pre">fea.Halfspace</span></code></a>) – List of Halfspaces to use as the current solution</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.Search.vd">
+<em class="property">property </em><code class="sig-name descname">vd</code><a class="headerlink" href="#fea.Search.vd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Variable dual values</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.Search.vexpr">
+<em class="property">property </em><code class="sig-name descname">vexpr</code><a class="headerlink" href="#fea.Search.vexpr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Variable expressions</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="fea.Search.vp">
+<em class="property">property </em><code class="sig-name descname">vp</code><a class="headerlink" href="#fea.Search.vp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Variable primal values</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="plotting.html" title="previous chapter">Plotting Functions</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Matthew R. Long and Jennifer L. Reed.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/internal classes.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

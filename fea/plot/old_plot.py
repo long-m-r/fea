@@ -27,6 +27,16 @@ def _figure_plot(fea,plot=None,figure=None):
     return figure, plot
 
 def plot_edges(fea,plot=None,figure=None):
+    """
+    Plot the edges of an FEA Lattice Graph
+
+    Arguments:
+        fea: Lattice Graph/FEA solution to plot
+        plot: [Optional] Matplotlib plot
+        figure: [Optional] Matplotlib figure
+    Returns:
+        tuple of Matplotlib figure and plot
+    """
     figure, plot=_figure_plot(fea,plot,figure)
 
     for edge in fea.get_nodes_of_level(1,real=True):
@@ -37,6 +47,17 @@ def plot_edges(fea,plot=None,figure=None):
     return figure, plot
 
 def plot_vertices(fea,plot=None,figure=None,label=False):
+    """
+    Plot the vertices of an FEA Lattice Graph
+
+    Arguments:
+        fea: Lattice Graph/FEA solution to plot
+        plot: [Optional] Matplotlib plot
+        figure: [Optional] Matplotlib figure
+        label: [Default=False] Whether to label the vertices with their ID
+    Returns:
+        tuple of Matplotlib figure and plot
+    """
     figure, plot=_figure_plot(fea,plot,figure)
 
     verts=[v for v in fea.get_vertices()]
@@ -53,6 +74,18 @@ def plot_vertices(fea,plot=None,figure=None,label=False):
     return figure, plot
 
 def label_facets(fea,plot=None,figure=None):
+    """
+    Label the facets of an FEA Lattice Graph.
+
+    Really only useful when combined with plot_edges
+
+    Arguments:
+        fea: Lattice Graph/FEA solution to plot
+        plot: [Optional] Matplotlib plot
+        figure: [Optional] Matplotlib figure
+    Returns:
+        tuple of Matplotlib figure and plot with the facets labeled
+    """
     figure, plot=_figure_plot(fea,plot,figure)
 
     legends=[]
@@ -72,3 +105,5 @@ def label_facets(fea,plot=None,figure=None):
     plot.legend(points,legends)
 
     return figure, plot
+
+__outputs__ = [plot_edges, plot_vertices, label_facets]

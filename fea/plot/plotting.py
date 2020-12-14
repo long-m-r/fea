@@ -8,6 +8,30 @@ from mpl_toolkits.mplot3d import axes3d
 from mpl_toolkits.mplot3d.art3d import Line3DCollection
 
 def plot(graph, **kwargs):
+    """
+    Plots a 2d or 3d graph given an FEA LatticeGraph object (the output of the fea function)
+
+    Arguments:
+        graph: FEA Lattice Graph to Plot
+
+    Named Arguments:
+        figure: The figure to plot on
+        cmap: color map (defaults to inferno)
+        x: specify variable name for X-axis
+        y: specify variable name for Y-axis
+        z: specify variable name for Z-axis
+        c: specify variable name for color-axis
+        vertices: Default True. Whether or not to plot vertices
+        edges: Default True. Whether or not to plot edges
+
+    Returns:
+        Tuple of matplotlib figure and plot
+
+    Example:
+        solution = fea(model, [x,y,z])
+        solfigure, solplot = plot(solution, x='x', y='y', z='z')
+        solfigure.savefix('solution_figure.svg')
+    """
     figure=kwargs.get('figure',plt.figure())
     cm=kwargs.get('cmap',matplotlib.cm.get_cmap('inferno'))
     
@@ -23,7 +47,7 @@ def plot(graph, **kwargs):
         plot.set_xlabel(str(kwargs.get('x','')))
         plot.set_ylabel(str(kwargs.get('y','')))
         
-        dname=[str(kwargs['x']),str(kwargs['y'])]
+        dname=[str(kwargs.get('x','')),str(kwargs.get('y',''))]
         
     dmat=np.zeros([len(dname),graph.N])
     vnames=[str(v) for v in graph._variables]
@@ -37,7 +61,7 @@ def plot(graph, **kwargs):
         cmat=None
         
     for i,n in enumerate(dname):
-            dmat[i,vnames.index(str(n))]=1
+        dmat[i,vnames.index(str(n))]=1
     
         
     # Plot vertices (if desired)
@@ -100,16 +124,18 @@ def plot(graph, **kwargs):
             
     return figure,plot
 
-def fix_clims(f,p,bounds=None,mul=[1,1]):
-    f.show()
-    if bounds is None:
-        print([c.get_clim() for c in p.collections])
-        lims=np.array([c.get_clim() for c in p.collections])
-        bounds=[min((i for i in lims.T[0] if i is not None)),max((i for i in lims.T[1] if i is not None))]
-    bounds=np.multiply(bounds,mul)
+# def fix_clims(f,p,bounds=None,mul=[1,1]):
+#     f.show()
+#     if bounds is None:
+#         print([c.get_clim() for c in p.collections])
+#         lims=np.array([c.get_clim() for c in p.collections])
+#         bounds=[min((i for i in lims.T[0] if i is not None)),max((i for i in lims.T[1] if i is not None))]
+#     bounds=np.multiply(bounds,mul)
 
-    for c in p.collections:
-        c.set_clim(*bounds)
+#     for c in p.collections:
+#         c.set_clim(*bounds)
     
-    f.colorbar(p.collections[0])
-    return bounds
+#     f.colorbar(p.collections[0])
+#     return bounds
+
+__exports__ = [plot]

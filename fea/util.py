@@ -5,7 +5,10 @@ import numpy as np
 
 #>>>>>>>>>>>>>>>>>> UTILITIES <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 def lstsq(A,b,eps,title="LstSq Solve"):
+    """Internal lstsq solver
     
+    Mostly critical for logging when debugging
+    """
     try:
         # If square A, use np.linalg.solve instead of np.linalg.lstsq. This should be faster (I hope!)
         shape=np.shape(A)
@@ -15,7 +18,6 @@ def lstsq(A,b,eps,title="LstSq Solve"):
                 _log_lstsq(A,b,[res,[]],title='Direct Solve')
             return res
         else:
-            
             res=np.linalg.lstsq(A,b)
             if log.getEffectiveLevel()<=10: # VERY expensive logging operation, but incredibly useful
                 _log_lstsq(A,b,res,title=title)
@@ -26,9 +28,11 @@ def lstsq(A,b,eps,title="LstSq Solve"):
             return res[0]
     except np.linalg.linalg.LinAlgError:
         raise ValueError('LstSq Result was invalid')
-        
 
 def _log_lstsq(A,b,res,pre='\t',title="LstSq Solve"):
+    """Internal helper function to properly log lstsq problems
+
+    Critical for debugging"""
     # log.info('Solving lstsq:')
     rstr=title+" (residuals: "+str(res[1])+"):\n"
     h,w=np.shape(A)

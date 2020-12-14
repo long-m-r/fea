@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 
 class VWrapper:
+    """Private wrapper for optlang variables
+
+    Basically just wraps it so the duals and bounds are easier
+    to get and set"""
     _coeff=[1,-1]
 
     def __init__(self,var,model):

@@ -18,21 +18,21 @@ from .VWrapper import VWrapper
 
 
 class LatticeGraph(DiGraph):
-    """A directed graph containing the Face Lattice Graph for the reduced space solution
-    
-    Inherits from :class:`networkx.DiGraph`
-
-    Parameters
-    -----------
-    problem : :class:`OptLang.Model`
-    variables : iterable
-        A list of target variables contained in the model
-    max_value : positive number
-        Maximum/Minimum Value for each variable (-max_value<=variable<=max_value). Will be applied to all variables with bounds greater than limit. Default 1000.
-    eps : float
-        Detection limit. Default 1E-4
-    """
     def __init__(self,problem,variables,max_value=1000,eps=10**-6):
+        """A directed graph containing the Face Lattice Graph for the reduced space solution
+        
+        Inherits from :class:`networkx.DiGraph`
+
+        Parameters
+        ----------
+        problem : :class:`OptLang.Model`
+        variables : iterable
+            A list of target variables contained in the model
+        max_value : positive number
+            Maximum/Minimum Value for each variable (-max_value<=variable<=max_value). Will be applied to all variables with bounds greater than limit. Default 1000.
+        eps : float
+            Detection limit. Default 1E-4
+        """
         self.EPS=eps
         self._n=len(variables)
 
@@ -90,9 +90,7 @@ class LatticeGraph(DiGraph):
         self._polytope_node=Node(n=self.N,eps=self.EPS)
         self.add_node(self._polytope_node, trace=0)
 
-        
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Basic Graph Properties <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-    
     @property
     def M(self):
         """Original problem dimensions"""
@@ -120,7 +118,7 @@ class LatticeGraph(DiGraph):
     @property
     def _trace(self):
         return next(self._trace_iter)
-    
+
     @property
     def EPS(self):
         """The detection limit of the method"""
@@ -129,9 +127,10 @@ class LatticeGraph(DiGraph):
     def DEC(self):
         """The order-of-magnitude of EPS"""
         return self._dec
-    
+
     @EPS.setter
     def EPS(self,value):
+        """Our search precision and margin of error"""
         self._eps=min(value,1)
         self._dec=int(max(0,-np.log10(self._eps)))
     @DEC.setter
@@ -145,7 +144,7 @@ class LatticeGraph(DiGraph):
 
         Notes
         -----
-        This vector is continously updated and maintained and is NOT re-calculated
+        This vector is continously updated and maintained and is NOT re-calculated on enumeration
         """
         return np.array([1]+self._f_vector, dtype=np.int)
 
@@ -165,12 +164,14 @@ class LatticeGraph(DiGraph):
 
     @property
     def complete(self):
+        """Boolean value indicating whether the Lattice Graph appears complete or whether missing nodes remain to be found"""
         return np.all(np.greater_equal(self.f_vector,self._minimum_f_vector)) and self.modified_euler_characteristic==0
-        
-    # def __str__(self):
-    #     nodes=sorted(self.nodes(),key=lambda x: x.sort_key, reverse=True)
-    #     rstr='\n'.join([str(n).replace('\n','\n\t') for n in nodes])
-    #     return 'Lattice Graph:\n'+rstr
+
+    def __str__(self):
+        """String representation of the current graph"""
+        nodes=sorted(self.nodes(),key=lambda x: x.sort_key, reverse=True)
+        rstr='\n'.join([str(n).replace('\n','\n\t') for n in nodes])
+        return 'Lattice Graph:\n'+rstr
 
 #>>>>>>>>>>>>>>>>>>>>>>>> Graph Modification Functions <<<<<<<<<<<<<<<<<<<<<<<<
     def add_node(self, node, **kwargs):
@@ -304,7 +305,8 @@ class LatticeGraph(DiGraph):
             self._update_graph_completeness()
 
     def add_edge(self,nodefrom,nodeto,**kwargs):
-        """Connect a parent node (higher level) to a child node (lower level).
+        """
+        Connect a parent node (higher level) to a child node (lower level).
         
         Parameters
         ----------
@@ -326,12 +328,54 @@ class LatticeGraph(DiGraph):
 
 #>>>>>>>>>>>>>>>>>> Graph Query Functions <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     def successors(self,node,real=None,complete=None):
+        """Get lower nodes given an input node
+
+        Parameters
+        ----------
+        node: :class:`fea.Node`
+            Node to find successors of
+        real: Boolean
+            Whether to only include real nodes
+        complete: Boolean
+            Whether to only return nodes which are part of a complete subgraph
+
+        Returns
+        -------
+        A list of successor nodes
+        """
         return list(filter(lambda n: (real is None or n.real==real) and (complete is None or self.node[n].get('complete',False)==complete), super().successors(node)))
 
     def predecessors(self,node,real=None,complete=None):
+        """Get higher nodes given an input node
+
+        Parameters
+        ----------
+        node: :class:`fea.Node`
+            Node to find predecessors of
+        real: Boolean
+            Whether to only include real nodes
+        complete: Boolean
+            Whether to only return nodes which are part of a complete subgraph
+
+        Returns
+        -------
+        A list of predecessor nodes
+        """
         return list(filter(lambda n: (real is None or n.real==real) and (complete is None or self.node[n].get('complete',False)==complete), super().predecessors(node)))
 
     def get_node(self, node):
+        """
+        Get a specific node in the graph
+
+        Parameters
+        -----------
+        node: int or :class:`fea.Node`
+            Either the node id or a node object to return
+
+        Returns
+        -------
+        The specified node object or None if it does not exist
+        """
         if isinstance(node,int):
             for n in self.nodes_iter():
                 if n.id==node:
@@ -344,6 +388,24 @@ class LatticeGraph(DiGraph):
         return None
 
     def get_nodes_of_level(self,level,connected=None,real=None,complete=None):
+        """Get all nodes of a given level
+
+        Parameters
+        ----------
+        level: int
+            Level of nodes to find
+        connected: :class:`fea.Node`
+            A node which the nodes of the desired level must connect to
+        real: Boolean
+            Whether to only include real nodes
+        complete: Boolean
+            Whether to only return nodes which are part of a complete subgraph
+
+        Returns
+        -------
+        A list of nodes of the desired level
+        """
+
         res=set()
 
         if connected is not None:
@@ -369,6 +431,23 @@ class LatticeGraph(DiGraph):
         return res
 
     def get_vertices(self,node=None,real=True,complete=True,pandas=False):
+        """Get all vertices
+
+        Parameters
+        ----------
+        node: :class:`fea.Node`
+            A node which the nodes of the desired level must connect to
+        real: Boolean
+            Whether to only include real nodes
+        complete: Boolean
+            Whether to only return nodes which are part of a complete subgraph
+        pandas: Boolean
+            Whether to return a pandas DataFrame or whether to return an array of fea.Node objects
+
+        Returns
+        -------
+        A list of all vertices
+        """
         # TODO: Maintain list of these? This is an expensive step that is oft repeated
         if pandas:
             res=[]
@@ -378,6 +457,25 @@ class LatticeGraph(DiGraph):
         return self.get_nodes_of_level(self.VERTEX_LEVEL,connected=node,real=real,complete=complete)
 
     def get_facets(self,node=None,real=True,complete=True,pandas=False,rhs_label='RHS'):
+        """Get all vertices
+
+        Parameters
+        ----------
+        node: :class:`fea.Node`
+            A node which the nodes of the desired level must connect to
+        real: Boolean
+            Whether to only include real nodes
+        complete: Boolean
+            Whether to only return nodes which are part of a complete subgraph
+        pandas: Boolean
+            Whether to return a pandas DataFrame or whether to return an array of fea.Node objects
+        rhs_label: String
+            The label for the Right-hand side. Default 'RHS'
+
+        Returns
+        -------
+        A list of all facets
+        """
         # TODO: Maintain list of these? This is an expensive step that is oft repeated
         if pandas:
             res=[]
@@ -389,6 +487,20 @@ class LatticeGraph(DiGraph):
 
 #>>>>>>>>>>>>>>>>> Functions for Searching/Solving the Graph <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     def solve(self,max_iter=50,exhaust=False):
+        """
+        Solve the LatticeGraph to find the complete solution
+
+        Parameters
+        ----------
+        max_iter: int
+            Max number of iterations before stopping
+        exhaust: bool
+            Whether to exhaust all edge searches or whether to stop when hueristics indicate we're done
+
+        Returns
+        --------
+        The number of iterations it took to solve
+        """
         ind=0
         while len(self.queue)>0 and ind<max_iter and (exhaust or (self.queue[0].level==1 and self.queue[0].real) or not self.complete):
             newsearch=self.queue[0]
@@ -410,6 +522,18 @@ class LatticeGraph(DiGraph):
         return ind
 
     def search(self,node=None):
+        """
+        Perform a single search to find another node in the LatticeGraph
+
+        Parameters
+        ----------
+        node: :class:`fea.Node`
+            A node to search from
+        
+        Returns
+        --------
+        True if a new node was found, False if not
+        """
         if node is None:
             node=self.queue[0]
 
@@ -467,6 +591,7 @@ class LatticeGraph(DiGraph):
 
 #>>>>>>>>>>>>>>>>>>>> Graph and Node Completion Functions <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<    
     def _update_graph_completeness(self,**kwargs):
+        """Internal helper method to update the graph completeness/f-vector/etc"""
         iteration = kwargs.get('_iteration',0)
         update=False
 
@@ -510,6 +635,7 @@ class LatticeGraph(DiGraph):
                 self._update_node_completeness(v)
             
     def _update_node_completeness(self, node):
+        """Helper method to update node completeness"""
         current = self.node[node].get('complete',False)
         possible = node.real and len(node & self._complete_halfspaces) >= (self.N - node.level) and (node.level==self.VERTEX_LEVEL or self.node[node].get('_complete_children',0)>node.level)
         
@@ -530,6 +656,18 @@ class LatticeGraph(DiGraph):
 
 #>>>>>>>>>>>>>>>>>>>>>>> Output/Formatting Functions <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     def to_optlang_model(self,replace_variables=True):
+        """
+        Convert this reduced LatticeGraph to a native optlang model
+
+        Parameters
+        ----------
+        replace_variables: bool
+            Whether to generate new variables so that solutions to the new model do not change this solution. Default True
+
+        Returns
+        --------
+        :class:`optlang.Model` object
+        """
         interface=self._problem.interface
         newmodel=interface.Model()
 
@@ -549,6 +687,13 @@ class LatticeGraph(DiGraph):
 
 
     def to_scipy_optimize_model(self):
+        """
+        Convert this reduced LatticeGraph to a native SciPy optimize model
+
+        Returns
+        --------
+        A dictionary so that `\*\*kwargs` works with scipy.optimize
+        """
         kwargs={}
 
 
