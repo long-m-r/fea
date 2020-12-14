@@ -38,64 +38,11 @@
 <p>This is a Python package for calculating a reduced-dimensional solution space from a larger linear program using optimization. It was designed for solving 2D and 3D solution spaces from large linear programs as utilized in constraint-based genome-scale metabolic modeling.</p>
 <p>It leverages <a class="reference external" href="https://github.com/opencobra/optlang">optlang</a> to interface with linear program solvers. This is also the backend that is utilized by <a class="reference external" href="http://cameo.bio/">cameo</a>.</p>
 <p>It includes some <code class="xref py py-class docutils literal notranslate"><span class="pre">matplotlib</span></code> plotting functions for generating basic 2D and 3D graphs from the reduced solution spaces (and even 4D if you’re willing to use color to represent the fourth dimension).</p>
-<p>Some terminology used throught this module:
-* Halfspace: A halfspace is a hyper-plane constraint which divides the total solution space in half. In 3D, a halfspace is a bounding plane. In 2D a halfspace is a bounding line. Each halfspace in the final solution is a bounding hyper-plane of the solution space (or a facet).
-* Node: A node is a unique combination of halfspaces which intersect. These include both facets and vertices depending upon how many halfspaces intersect for a given node. In 3D, a plane node has one halfspace, a line node has two halfspaces, and a vertice node has three halfspaces.
-* Lattice Graph: This shows the complete set of nodes and the halfspaces they contain</p>
-<p>Here’s a picture showing a pyramid and the corresponding lattice graph with nodes and halfspaces defined. It also shows how FEA solves the solution; however, read the <a class="reference external" href="./_static/FEA_Manuscript.pdf">full manuscript</a> for more details on how this works.</p>
-<a class="reference internal image-reference" href="_images/Pyramid_face_lattice.svg"><img alt="_images/Pyramid_face_lattice.svg" src="_images/Pyramid_face_lattice.svg" width="700" /></a>
+<p>For more details on the implementation, read the <a class="reference external" href="../_static/FEA_Manuscript.pdf">full manuscript</a>. For examples and current issues, see the <a class="reference external" href="https://github.com/long-m-r/fea">GitHub page</a>.</p>
 </div>
-<div class="section" id="notes-and-warnings">
-<h1>Notes and Warnings<a class="headerlink" href="#notes-and-warnings" title="Permalink to this headline">¶</a></h1>
-<ul class="simple">
-<li><p>If at all possible, run this package with something other than GLPK. I no longer have access to Gurobi or CPLEX, but it works pretty well with those whereas GLPK <em>will</em> cause issues</p></li>
-<li><p>This code was written in 2017 for <a class="reference external" href="https://pubmed.ncbi.nlm.nih.gov/29940066/">A framework for the identification of promising bio-based chemicals</a> and was going to be published separately, but due to some unforseen circumstances was not independently published.</p></li>
-</ul>
-</div>
-<div class="section" id="example">
-<h1>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h1>
-<p>For a basic example, we’ll start by defining a 3D pyramid as the original model as shown in the image above. The pyramid will have 4 sides and a bottom (or 5 facets/constraints). We’ll generate it the original model first and then solve it for just the x and y axes (removing z from consideration)</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">optlang</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">fea</span> <span class="kn">import</span> <span class="n">flux_envelope_analysis</span>
-
-<span class="c1"># Start by defining our original pyramid</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;Pyramid&#39;</span><span class="p">)</span>
-<span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span> <span class="o">=</span> <span class="p">(</span><span class="n">Variable</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">),</span><span class="n">Variable</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">),</span><span class="n">Variable</span><span class="p">(</span><span class="s1">&#39;z&#39;</span><span class="p">))</span>
-<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">([</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">])</span>
-<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Constraint</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;base&#39;</span><span class="p">))</span>
-<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Constraint</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="p">,</span><span class="n">ub</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;left_wall&#39;</span><span class="p">))</span>
-<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Constraint</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="p">,</span><span class="n">ub</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;right_wall&#39;</span><span class="p">))</span>
-<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Constraint</span><span class="p">(</span><span class="o">-</span><span class="n">z</span><span class="o">+</span><span class="n">y</span><span class="p">,</span><span class="n">ub</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;front_wall&#39;</span><span class="p">))</span>
-<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Constraint</span><span class="p">(</span><span class="n">z</span><span class="o">+</span><span class="n">y</span><span class="p">,</span><span class="n">ub</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;back_wall&#39;</span><span class="p">))</span>
-
-<span class="c1"># Let&#39;s solve for what it looks like in 2D from the front</span>
-<span class="n">front_view</span> <span class="o">=</span> <span class="n">flux_envelope_analysis</span><span class="p">(</span><span class="n">model</span><span class="p">,[</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">])</span>
-</pre></div>
-</div>
-<p>Easy enough, now let’s plot the solution space and generate the Lattice Graph as an image:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">fea.plot</span> <span class="kn">import</span> <span class="n">plot</span><span class="p">,</span> <span class="n">generate_graphviz</span>
-
-<span class="c1"># Get and save the plot</span>
-<span class="n">front_figure</span><span class="p">,</span> <span class="n">front_plot</span> <span class="o">=</span> <span class="n">plot</span><span class="p">(</span><span class="n">front_view</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
-<span class="n">front_figure</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;./front_view_plot.svg&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<a class="reference internal image-reference" href="_images/front_view_plot.svg"><img alt="_images/front_view_plot.svg" src="_images/front_view_plot.svg" width="400" /></a>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">subprocess</span>
-
-<span class="c1"># Get graphviz input and generate the image</span>
-<span class="n">front_graph</span> <span class="o">=</span> <span class="n">generate_graphviz</span><span class="p">(</span><span class="n">front_view</span><span class="p">)</span>
-<span class="n">proc</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s2">&quot;dot&quot;</span><span class="p">,</span><span class="s2">&quot;-Tpng&quot;</span><span class="p">,</span><span class="s2">&quot;-o&quot;</span><span class="p">,</span><span class="s1">&#39;./front_view_graph.png&#39;</span><span class="p">],</span> <span class="n">stdin</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">)</span>
-<span class="n">output</span> <span class="o">=</span> <span class="n">proc</span><span class="o">.</span><span class="n">communicate</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">front_graph</span><span class="o">.</span><span class="n">encode</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span>
-</pre></div>
-</div>
-<a class="reference internal image-reference" href="_images/front_view_graph.png"><img alt="_images/front_view_graph.png" src="_images/front_view_graph.png" style="width: 400px;" /></a>
-<p>That’s all it takes to get started! You can extend this example to plot x vs z and you should see a square plot instead of a triangle since you’d be looking at it from top/bottom instead of the side.</p>
-<p>See the manuscript linked above or the various classes listed below for more details.</p>
-</div>
-<div class="section" id="index-and-documentation">
-<h1>Index and Documentation<a class="headerlink" href="#index-and-documentation" title="Permalink to this headline">¶</a></h1>
-<p>The main entry point into FEA is the flux_envelope_analysis function documented here. Other documentation is linked at the bottom.</p>
+<div class="section" id="documentation">
+<h1>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h1>
+<p>The main entry point into FEA is the flux_envelope_analysis function documented here. Other documentation is linked below.</p>
 <span class="target" id="module-fea"></span><dl class="py function">
 <dt id="fea.flux_envelope_analysis">
 <code class="sig-prename descclassname">fea.</code><code class="sig-name descname">flux_envelope_analysis</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em>, <em class="sig-param"><span class="n">variables</span></em>, <em class="sig-param"><span class="n">max_value</span><span class="o">=</span><span class="default_value">1000</span></em>, <em class="sig-param"><span class="n">max_iter</span><span class="o">=</span><span class="default_value">1000</span></em>, <em class="sig-param"><span class="n">eps</span><span class="o">=</span><span class="default_value">0.0001</span></em><span class="sig-paren">)</span><a class="headerlink" href="#fea.flux_envelope_analysis" title="Permalink to this definition">¶</a></dt>
@@ -123,10 +70,6 @@ the solution returned will be complete. Always check the ‘complete’ attribut
 solution before utilizing.</p>
 </dd></dl>
 
-<ul class="simple">
-<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
-<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
-</ul>
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
@@ -134,6 +77,13 @@ solution before utilizing.</p>
 <li class="toctree-l1"><a class="reference internal" href="internal%20classes.html">Internal Classes</a></li>
 </ul>
 </div>
+</div>
+<div class="section" id="index">
+<h1>Index<a class="headerlink" href="#index" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+</ul>
 </div>
 
 
