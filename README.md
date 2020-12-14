@@ -74,3 +74,9 @@ output = proc.communicate(input=front_graph.encode())[0]
 ![graph showing the lattice graph of the reduced solution of the pyramid along the x and y axes](docs/_static/front_view_graph.png "Reduced solution graph")
 
 That's all it takes to get started! You can extend this example to plot x vs z and you should see a square plot instead of a triangle since you'd be looking at it from top/bottom instead of the side.
+
+Once you start applying this to real problems, you can start to gain insights into what is happening in your linear programs, for example, here's Figure 4 from the manuscript:
+
+![Plot showing Phenotipic Phase Planes](docs/_static/Fig4.png "Phenotypic Phase Plane")
+
+Without digging too much into the terminology, you can see that the experimental data (marked by `x`) exist in three different parts of the solution space. Furthermore, you can see in panel B and C how the growth rate and ethanol production vary based on the amount of Oxygen available. When there is lots of oxygen, the yeast cells grow fastest and don't need to make much ethanol; however, as oxygen becomes more limited you need to start producing ethanol to continue growing, although growth will be slower than if oxygen was more available. This makes sense, since that's pretty much how brewing beer works!
